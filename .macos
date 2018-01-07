@@ -28,9 +28,7 @@ sudo pmset -a standbydelay 86400
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
 
-# Disable transparency in the menu bar and elsewhere on Yosemite
-defaults write com.apple.universalaccess reduceTransparency -bool true
-
+# Disable transparency in the menu bar and elsewhere on Yosemite defaults write com.apple.universalaccess reduceTransparency -bool true 
 # Set highlight color to green
 defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
 
@@ -849,6 +847,37 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 # Bypass the annoyingly slow t.co URL shortener
 # defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
 
+### SETUP SHORTCUTS
+/usr/libexec/PlistBuddy \
+    -c "Set AppleSymbolicHotKeys:118:enabled true" \
+    -c "Set AppleSymbolicHotKeys:118:value:parameters:0 49" \
+    -c "Set AppleSymbolicHotKeys:118:value:parameters:1 18" \
+    -c "Set AppleSymbolicHotKeys:118:value:parameters:2 1048576" \
+    -c "Set AppleSymbolicHotKeys:119:enabled true" \
+    -c "Set AppleSymbolicHotKeys:119:value:parameters:0 50" \
+    -c "Set AppleSymbolicHotKeys:119:value:parameters:1 19" \
+    -c "Set AppleSymbolicHotKeys:119:value:parameters:2 1048576" \
+    -c "Set AppleSymbolicHotKeys:120:enabled true" \
+    -c "Set AppleSymbolicHotKeys:120:value:parameters:0 51" \
+    -c "Set AppleSymbolicHotKeys:120:value:parameters:1 20" \
+    -c "Set AppleSymbolicHotKeys:120:value:parameters:2 1048576" \
+    ~/Library/Preferences/com.apple.symbolichotkeys.plist
+
+/usr/libexec/PlistBuddy \
+    -c "Set AppleSymbolicHotKeys:121:enabled true" \
+    -c "Set AppleSymbolicHotKeys:121:value:parameters:0 52" \
+    -c "Set AppleSymbolicHotKeys:121:value:parameters:1 21" \
+    -c "Set AppleSymbolicHotKeys:121:value:parameters:2 1048576" \
+    -c "Set AppleSymbolicHotKeys:122:enabled true" \
+    -c "Set AppleSymbolicHotKeys:122:value:parameters:0 53" \
+    -c "Set AppleSymbolicHotKeys:122:value:parameters:1 22" \
+    -c "Set AppleSymbolicHotKeys:122:value:parameters:2 1048576" \
+    -c "Set AppleSymbolicHotKeys:123:enabled true" \
+    -c "Set AppleSymbolicHotKeys:123:value:parameters:0 54" \
+    -c "Set AppleSymbolicHotKeys:123:value:parameters:1 23" \
+    -c "Set AppleSymbolicHotKeys:123:value:parameters:2 1048576" \
+    ~/Library/Preferences/com.apple.symbolichotkeys.plist
+ 
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
