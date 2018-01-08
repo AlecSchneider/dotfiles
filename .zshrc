@@ -91,5 +91,5 @@ export LANG=en_US.UTF-8
 export EDITOR=/usr/local/bin/nvim
 export VISUAL=/usr/local/bin/nvim
 
-bindkey -v
-bindkey "^?" backward-delete-char
+#bindkey -v
+#bindkey "^?" backward-delete-char

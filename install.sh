@@ -7,7 +7,6 @@ ln -sfv "$DOTFILES_DIR/.bash_profile" ~
 ln -sfv "$DOTFILES_DIR/.zshrc" ~
 ln -sfv "$DOTFILES_DIR/.chunkwmrc" ~
 ln -sfv "$DOTFILES_DIR/.skhdrc" ~
-ln -sfv "$DOTFILES_DIR/.oh-my-zsh" ~
 ln -sfv "$DOTFILES_DIR/nvim" ~/.config
 
 . "$DOTFILES_DIR/brew.sh"
