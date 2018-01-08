@@ -21,6 +21,7 @@ packages=(
   node
   python3
   python2
+  ranger
   shellcheck
   wget
 )
