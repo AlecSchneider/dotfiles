@@ -1,11 +1,14 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-PATH="/usr/local/sbin:$PATH:/usr/local/bin"
+export GOPATH=$HOME/gocode
+PATH="/usr/local/sbin:$PATH:/usr/local/bin:$GOPATH/bin"
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 alias python='python3'
 alias pip='pip3'
 alias vim='nvim'
+alias loadnvm=". /usr/local/opt/nvm/nvm.sh"
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -95,3 +98,4 @@ export VISUAL=/usr/local/bin/nvim
 #bindkey "^?" backward-delete-char
 autoload -U promptinit; promptinit
 prompt pure
+source /Users/alecs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

@@ -1,5 +1,4 @@
-let maplocalleader=','
-let mapleader=','
+let mapleader="\<SPACE>"
 set termguicolors
 syntax on
 colorscheme solarized8_dark
@@ -12,6 +11,11 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     let g:deoplete#omni#input_patterns = {}
     autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
     inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+    let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+    let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+Plug 'jodosha/vim-godebug'
+Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 Plug 'rbgrouleff/bclose.vim'
 Plug 'scrooloose/nerdtree'
     nnoremap <silent> <leader>f :NERDTreeToggle<cr>
@@ -31,10 +35,13 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 				\ 'ctrl-v': 'vsplit' }
 	nnoremap <silent> <c-x> :FZF<cr>
 Plug 'kchmck/vim-coffee-script'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'fatih/vim-go'
 call plug#end()
 set relativenumber
 set number
+au TermOpen * setlocal nonumber norelativenumber
 language en_US
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
@@ -72,5 +79,50 @@ inoremap jk <esc>
 inoremap jK <esc>
 inoremap Jk <esc>
 inoremap JK <esc>
+tnoremap jk <C-\><C-n>
+tnoremap jK <C-\><C-n>
+tnoremap Jk <C-\><C-n>
+tnoremap JK <C-\><C-n>
+
+nnoremap <leader>q :q<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader><CR> :vsp<Bar>term<CR>i
+nnoremap <CR> :nohlsearch<CR><CR>
+" # clipboard
+" yank to clipboard
+if has("clipboard")
+    set clipboard=unnamed " copy to the system clipboard
+
+    if has("unnamedplus") " X11 support
+        set clipboard+=unnamedplus
+    endif
+endif
 
 let g:ranger_replace_netrw = 1
+
+" Go Config
+autocmd FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)<Paste>
+autocmd FileType go nmap <leader>i  <Plug>(go-sameids-toggle)
+function! s:build_go_files()
+	let l:file = expand('%')
+	if l:file =~# '^\f\+_test\.go$'
+    	call go#test#Test(0, 1)
+    elseif l:file =~# '^\f\+\.go$'
+        call go#cmd#Build(0)
+    endif
+endfunction
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+
+
+let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave = 1
+let g:go_auto_type_info = 1
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+

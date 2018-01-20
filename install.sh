@@ -9,5 +9,5 @@ ln -sfv "$DOTFILES_DIR/.chunkwmrc" ~
 ln -sfv "$DOTFILES_DIR/.skhdrc" ~
 ln -sfv "$DOTFILES_DIR/nvim" ~/.config
 
-. "$DOTFILES_DIR/brew.sh"
-. "$DOTFILES_DIR/.macos"
+#. "$DOTFILES_DIR/brew.sh"
+#. "$DOTFILES_DIR/.macos"
