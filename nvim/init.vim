@@ -4,19 +4,20 @@ syntax on
 colorscheme solarized8_dark
 let python_highlight_all = 1
 call plug#begin('~/.config/nvim/plugged/')
-Plug 'whatyouhide/vim-gotham'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'mileszs/ack.vim'
+Plug 'janko-m/vim-test'
+Plug 'thaerkh/vim-workspace'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     let g:deoplete#enable_at_startup = 1
-    let g:deoplete#omni#input_patterns = {}
     autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
     inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 Plug 'zchee/deoplete-go', { 'do': 'make'}
     let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
     let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 Plug 'jodosha/vim-godebug'
-Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
-Plug 'rbgrouleff/bclose.vim'
+Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' } 
 Plug 'scrooloose/nerdtree'
     nnoremap <silent> <leader>f :NERDTreeToggle<cr>
     let NERDTreeMinimalUI=1
@@ -26,18 +27,22 @@ Plug 'vim-airline/vim-airline-themes'
     let g:airline_solarized_bg='dark'
 Plug 'w0rp/ale'
 Plug 'zchee/deoplete-jedi'
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-sensible'
+"Plug 'tpope/vim-sensible'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	let g:fzf_action = {
 				\ 'ctrl-t': 'tab split',
 				\ 'ctrl-x': 'split',
 				\ 'ctrl-v': 'vsplit' }
 	nnoremap <silent> <c-x> :FZF<cr>
-Plug 'kchmck/vim-coffee-script'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go'
+Plug 'SirVer/ultisnips'
+Plug 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 call plug#end()
 set relativenumber
 set number
@@ -47,7 +52,8 @@ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
 
 set hidden
-set splitright " Split to right by default
+set splitbelow
+set splitright
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -64,7 +70,10 @@ set hlsearch
 set termencoding=utf-8
 au FocusLost * silent! wall
 au BufLeave * silent! wall
-au BufWinEnter,WinEnter term://* startinsert
+autocmd BufEnter * if &buftype == "terminal" | startinsert | endif
+command Tsplit split term://$SHELL
+command Tvsplit vsplit term://$SHELL
+command Ttabedit tabedit term://$SHELL
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
@@ -100,10 +109,25 @@ endif
 
 let g:ranger_replace_netrw = 1
 
+"Git Config
+nmap <leader>gr :Gread<CR>
+nmap <leader>gw :Gwrite<CR>
+nmap <leader>gm :Gmove 
+nmap <leader>gd :Gremove<CR>
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gc :Gcommit<CR>
+nmap <leader>gb :Gblame<CR>
+
+
 " Go Config
-autocmd FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
-autocmd FileType go nmap <leader>r  <Plug>(go-run)<Paste>
-autocmd FileType go nmap <leader>i  <Plug>(go-sameids-toggle)
+au FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <Leader>rs <Plug>(go-run-split)
+au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
+au FileType go nmap <leader>i  <Plug>(go-sameids-toggle)
+au FileType go nmap <leader>d  :GoDebug<CR>
+au FileType go nmap <leader>p  :GoToggleBreakpoint<CR>
+
 function! s:build_go_files()
 	let l:file = expand('%')
 	if l:file =~# '^\f\+_test\.go$'
@@ -114,10 +138,12 @@ function! s:build_go_files()
 endfunction
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 
-
+let g:go_term_mode = "vsplit"
+let g:go_term_enabled = 0
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
 let g:go_auto_type_info = 1
+let g:go_info_mode = 'gocode'
 
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1

@@ -787,9 +787,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>650 607 620 392 0 0 1920 1200 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>269 195 796 473 0 0 1920 1200 </string>
+	<string>585 588 796 473 0 0 3360 1890 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>7 5 1906 1160 0 0 1920 1200 </string>
+	<string>1686 10 1666 1840 0 0 3360 1890 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1061,7 +1061,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/bin/zsh</string>
+			<string>/usr/local/bin/zsh</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1134,6 +1134,8 @@
 			<real>1</real>
 			<key>Idle Code</key>
 			<integer>0</integer>
+			<key>Initial Text</key>
+			<string>clear</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -1458,7 +1460,7 @@
 			<key>Screen</key>
 			<integer>-2</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>10000</integer>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1523,6 +1525,10 @@
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>221A3E12-355E-4EF7-A1C8-9860C2D8AEEF</string>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
+	<true/>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
+	<integer>1</integer>
 	<key>NoSyncPermissionToShowTip</key>
 	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
@@ -1577,7 +1583,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-01-17T18:39:32Z</date>
+	<date>2018-02-13T00:02:28Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowBookmarkName</key>
