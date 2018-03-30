@@ -3,10 +3,14 @@ set termguicolors
 syntax on
 colorscheme solarized8_dark
 let python_highlight_all = 1
+let g:python_host_prog = '/Users/alecs/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/alecs/.pyenv/versions/neovim3/bin/python'
 call plug#begin('~/.config/nvim/plugged/')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'mileszs/ack.vim'
+    cnoreabbrev Ack Ack!
+    nnoremap <Leader>a :Ack!<Space>
 Plug 'janko-m/vim-test'
 Plug 'thaerkh/vim-workspace'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -35,21 +39,25 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 				\ 'ctrl-v': 'vsplit' }
 	nnoremap <silent> <c-x> :FZF<cr>
 Plug 'fatih/vim-go'
+Plug 'godoctor/godoctor.vim'
 Plug 'SirVer/ultisnips'
+Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
-let g:SuperTabDefaultCompletionType = '<C-n>'
+    let g:SuperTabDefaultCompletionType = '<C-n>'
 
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+    " better key bindings for UltiSnipsExpandTrigger
+    let g:UltiSnipsExpandTrigger = "<tab>"
+    let g:UltiSnipsJumpForwardTrigger = "<tab>"
+    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+Plug 'solarnz/thrift.vim'
 call plug#end()
 set relativenumber
 set number
+set undofile
 au TermOpen * setlocal nonumber norelativenumber
 language en_US
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+match OverLength /\%101v.\+/
 
 set hidden
 set splitbelow
@@ -74,6 +82,7 @@ autocmd BufEnter * if &buftype == "terminal" | startinsert | endif
 command Tsplit split term://$SHELL
 command Tvsplit vsplit term://$SHELL
 command Ttabedit tabedit term://$SHELL
+nnoremap <bs> <c-^>
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
@@ -95,6 +104,7 @@ tnoremap JK <C-\><C-n>
 
 nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
+nnoremap <leader>s :%s/
 nnoremap <leader><CR> :vsp<Bar>term<CR>i
 nnoremap <CR> :nohlsearch<CR><CR>
 " # clipboard
@@ -121,10 +131,11 @@ nmap <leader>gb :Gblame<CR>
 
 " Go Config
 au FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
-au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>r :Rename 
 au FileType go nmap <Leader>rs <Plug>(go-run-split)
 au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
 au FileType go nmap <leader>i  <Plug>(go-sameids-toggle)
+au FileType go nmap <leader>e  <Plug>(go-referrers)
 au FileType go nmap <leader>d  :GoDebug<CR>
 au FileType go nmap <leader>p  :GoToggleBreakpoint<CR>
 
