@@ -93,6 +93,12 @@ export LANG=en_US.UTF-8
 export EDITOR=/usr/local/bin/nvim
 export VISUAL=/usr/local/bin/nvim
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PATH:$PYENV_ROOT/bin"
+eval "$(pyenv init -)"
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+
 # Defer initialization of nvm until nvm, node or a node-dependent command is
 # run. Ensure this block is only run once if .bashrc gets sourced multiple times
 # by checking whether __init_nvm is a function.
@@ -113,6 +119,5 @@ fi
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 #bindkey -v
 #bindkey "^?" backward-delete-char
-source /Users/alecs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -U promptinit; promptinit
 prompt pure

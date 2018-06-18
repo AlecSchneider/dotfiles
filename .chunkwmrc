@@ -89,3 +89,8 @@ chunkc core::load bar.so
 chunkc tiling::rule --owner Spotify --role AXWindow --subrole AXDialog --state tile
 chunkc tiling::rule --owner Finder --name Copy --state float
 chunkc tiling::rule --owner \"App Store\" --state float
+chunkc tiling::rule --owner iTunes --desktop 5
+chunkc tiling::rule --owner Safari --desktop 3 
+chunkc tiling::rule --owner iTerm --desktop 2 
+chunkc tiling::rule --owner Mail --desktop 1 
+chunkc tiling::rule --owner \"Telegram Desktop\" --desktop 1 

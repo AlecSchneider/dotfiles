@@ -42,9 +42,9 @@ brew install neovim
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # install apps
-brew cask install slack
+# brew cask install slack
 brew cask install telegram-desktop
 brew cask install iterm2
-brew cask install google-chrome
+# brew cask install google-chrome
 brew cask install ubersicht
-brew cask install vlc
+# brew cask install vlc

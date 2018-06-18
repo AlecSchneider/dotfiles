@@ -3,54 +3,64 @@ set termguicolors
 syntax on
 colorscheme solarized8_dark
 let python_highlight_all = 1
-let g:python_host_prog = '/Users/alecs/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/Users/alecs/.pyenv/versions/neovim3/bin/python'
-call plug#begin('~/.config/nvim/plugged/')
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'mileszs/ack.vim'
-    cnoreabbrev Ack Ack!
-    nnoremap <Leader>a :Ack!<Space>
-Plug 'janko-m/vim-test'
-Plug 'thaerkh/vim-workspace'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    let g:deoplete#enable_at_startup = 1
-    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-    inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-    let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-    let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-Plug 'jodosha/vim-godebug'
-Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' } 
-Plug 'scrooloose/nerdtree'
-    nnoremap <silent> <leader>f :NERDTreeToggle<cr>
-    let NERDTreeMinimalUI=1
-Plug 'airblade/vim-gitgutter'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-    let g:airline_solarized_bg='dark'
-Plug 'w0rp/ale'
-Plug 'zchee/deoplete-jedi'
-"Plug 'tpope/vim-sensible'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	let g:fzf_action = {
-				\ 'ctrl-t': 'tab split',
-				\ 'ctrl-x': 'split',
-				\ 'ctrl-v': 'vsplit' }
-	nnoremap <silent> <c-x> :FZF<cr>
-Plug 'fatih/vim-go'
-Plug 'godoctor/godoctor.vim'
-Plug 'SirVer/ultisnips'
-Plug 'scrooloose/nerdcommenter'
-Plug 'ervandew/supertab'
-    let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:python_host_prog = '/Users/alec/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/alec/.pyenv/versions/neovim3/bin/python'
 
-    " better key bindings for UltiSnipsExpandTrigger
-    let g:UltiSnipsExpandTrigger = "<tab>"
-    let g:UltiSnipsJumpForwardTrigger = "<tab>"
-    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-Plug 'solarnz/thrift.vim'
+call plug#begin('~/.config/nvim/plugged/')
+    " Universal
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-surround'
+    Plug 'mileszs/ack.vim'
+        cnoreabbrev Ack Ack!
+        nnoremap <Leader>a :Ack!<Space>
+    Plug 'janko-m/vim-test'
+    Plug 'thaerkh/vim-workspace'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+        let g:deoplete#enable_at_startup = 1
+        autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+        inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+    Plug 'scrooloose/nerdtree'
+        nnoremap <silent> <leader>f :NERDTreeToggle<cr>
+        let NERDTreeMinimalUI=1
+    Plug 'airblade/vim-gitgutter'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+        let g:airline_solarized_bg='dark'
+    Plug 'w0rp/ale'
+    "Plug 'tpope/vim-sensible'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        let g:fzf_action = {
+                    \ 'ctrl-t': 'tab split',
+                    \ 'ctrl-x': 'split',
+                    \ 'ctrl-v': 'vsplit' }
+        nnoremap <silent> <c-x> :FZF<cr>
+
+    " Go
+    Plug 'zchee/deoplete-go', { 'do': 'make'}
+        let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+        let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+    Plug 'jodosha/vim-godebug'
+    Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' } 
+    Plug 'fatih/vim-go'
+    Plug 'godoctor/godoctor.vim'
+    Plug 'SirVer/ultisnips'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'ervandew/supertab'
+        let g:SuperTabDefaultCompletionType = '<C-n>'
+
+        " better key bindings for UltiSnipsExpandTrigger
+        let g:UltiSnipsExpandTrigger = "<tab>"
+        let g:UltiSnipsJumpForwardTrigger = "<tab>"
+        let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+    " Python
+    Plug 'zchee/deoplete-jedi'
+    Plug 'plytophogy/vim-virtualenv'
+
+    " Thrift
+    Plug 'solarnz/thrift.vim'
 call plug#end()
+
 set relativenumber
 set number
 set undofile
@@ -128,6 +138,9 @@ nmap <leader>gs :Gstatus<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gb :Gblame<CR>
 
+" Python Config
+au FileType python nmap <leader>r :vsp \| term python3 %<CR>i
+let g:virtualenv_auto_activate = 1
 
 " Go Config
 au FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
