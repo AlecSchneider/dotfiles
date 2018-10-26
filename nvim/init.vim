@@ -1,10 +1,11 @@
 let mapleader="\<SPACE>"
-set termguicolors
+set background=dark
+set t_Co=256
 syntax on
 colorscheme solarized8_dark
 let python_highlight_all = 1
-let g:python_host_prog = '/Users/alec/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/Users/alec/.pyenv/versions/neovim3/bin/python'
+let g:python_host_prog = '/Users/aschneider/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/aschneider/.pyenv/versions/neovim3/bin/python'
 
 call plug#begin('~/.config/nvim/plugged/')
     " Universal
@@ -26,7 +27,18 @@ call plug#begin('~/.config/nvim/plugged/')
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
         let g:airline_solarized_bg='dark'
+        let g:airline_section_x = ''
+    Plug 'leafgarland/typescript-vim'
     Plug 'w0rp/ale'
+        let g:ale_fixers = {
+    \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+    \   'javascript': ['eslint', 'prettier'],
+    \   'typescript': ['eslint'],
+    \}
+        let g:ale_fix_on_save = 1
+        nnoremap gt :ALEGoToDefinition<CR>
+        nnoremap gr :ALEFindReferences<CR>
+        nnoremap gh :ALEHover<CR>
     "Plug 'tpope/vim-sensible'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         let g:fzf_action = {
@@ -40,7 +52,7 @@ call plug#begin('~/.config/nvim/plugged/')
         let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
         let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
     Plug 'jodosha/vim-godebug'
-    Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' } 
+    Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
     Plug 'fatih/vim-go'
     Plug 'godoctor/godoctor.vim'
     Plug 'SirVer/ultisnips'
@@ -59,6 +71,10 @@ call plug#begin('~/.config/nvim/plugged/')
 
     " Thrift
     Plug 'solarnz/thrift.vim'
+
+    " Tmux
+    Plug 'christoomey/vim-tmux-navigator'
+
 call plug#end()
 
 set relativenumber
@@ -132,7 +148,7 @@ let g:ranger_replace_netrw = 1
 "Git Config
 nmap <leader>gr :Gread<CR>
 nmap <leader>gw :Gwrite<CR>
-nmap <leader>gm :Gmove 
+nmap <leader>gm :Gmove
 nmap <leader>gd :Gremove<CR>
 nmap <leader>gs :Gstatus<CR>
 nmap <leader>gc :Gcommit<CR>
@@ -144,7 +160,7 @@ let g:virtualenv_auto_activate = 1
 
 " Go Config
 au FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
-au FileType go nmap <leader>r :Rename 
+au FileType go nmap <leader>r :Rename
 au FileType go nmap <Leader>rs <Plug>(go-run-split)
 au FileType go nmap <Leader>rv <Plug>(go-run-vertical)
 au FileType go nmap <leader>i  <Plug>(go-sameids-toggle)
@@ -176,3 +192,19 @@ let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 
+" fugitive git bindings
+nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit -v -q<CR>
+nnoremap <leader>gt :Gcommit -v -q %:p<CR>
+nnoremap <leader>gg :Gpush<CR>
+nnoremap <leader>gh :Gpull<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>ge :Gedit<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gw :Gwrite<CR><CR>
+nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <leader>gp :Ggrep<Space>
+nnoremap <leader>gm :Gmove<Space>
+nnoremap <leader>gb :Git branch<Space>
+nnoremap <leader>go :Git checkout<Space>
