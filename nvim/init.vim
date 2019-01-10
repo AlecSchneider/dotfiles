@@ -158,6 +158,9 @@ nmap <leader>gb :Gblame<CR>
 au FileType python nmap <leader>r :vsp \| term python3 %<CR>i
 let g:virtualenv_auto_activate = 1
 
+" JavaScript Config
+au FileType javascript nmap <leader>r :vsp \| term node %<CR>i
+
 " Go Config
 au FileType go nmap <Leader>c  <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>r :Rename
