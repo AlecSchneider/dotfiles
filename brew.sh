@@ -21,6 +21,8 @@ brew install python2
 brew install ranger
 brew install shellcheck
 brew install wget
+brew install tldr
+
 
 # setup zsh shell
 brew install zsh
@@ -31,11 +33,11 @@ npm install --global pure-prompt
 # setup skhd
 brew install koekeishiya/formulae/skhd
 brew services start skhd
+brew install koekeishiya/formulae/yabai
+brew services start yabai
+brew install cmacrae/formulae/spacebar
+brew services start spacebar
 
-# setup chunkwm
-brew tap crisidev/homebrew-chunkwm
-brew install chunkwm
-brew services start chunkwm
 
 # setup neovim
 brew install neovim
@@ -46,5 +48,3 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 # brew cask install telegram-desktop
 brew cask install iterm2
 # brew cask install google-chrome
-brew cask install ubersicht
-# brew cask install vlc
