@@ -1,0 +1,11 @@
+{
+    "python.jediEnabled": false,
+    "coc.preferences.rootPatterns": ["Podfile", "requirements.txt", ".git", ".hg", ".projections.json", "__init__.py"],
+    "languageserver": {
+        "golang": {
+        "command": "gopls",
+        "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+        "filetypes": ["go"]
+        }
+    }
+}

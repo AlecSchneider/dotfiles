@@ -1,13 +1,26 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export GOPATH=$HOME/gocode
-PATH="/usr/local/sbin:$PATH:/usr/local/bin:$GOPATH/bin"
+PATH="/opt/homebrew/bin/:/bin:/usr/local/sbin:$PATH:$GOPATH/bin:/usr/local/share/zsh/site-functions"
+PATH="/Users/alec/.local/share/solana/install/active_release/bin:$PATH"
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export MYPATH="/usr/local/lib/python3.7/site-packages"
+export FZF_BASE="$HOME/.fzf"
 alias python='python3'
 alias pip='pip3'
 alias vim='nvim'
+alias gm='git checkout master && git pull'
+alias zshrc='vim ~/.zshrc'
+alias init.vim='vim ~/.dotfiles/nvim/init.vim'
+alias gbc='git checkout -b'
+alias gb='git checkout'
+alias ga='git add *'
+alias gc='git add-u && commit'
+alias gg='git push'
+alias gh='git pull'
+alias matrix='cmatrix -b'
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -54,11 +67,14 @@ ZSH_THEME=""
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git cloudapp node npm bower brew osx sextract z zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git cloudapp node npm bower brew osx extract z zsh-syntax-highlighting zsh-autosuggestions zsh-completions history-substring-search zsh-apple-touchbar fzf)
 
 source $ZSH/oh-my-zsh.sh
 
+bindkey '^K' history-substring-search-up
+bindkey '^J' history-substring-search-down
 # User configuration
+#
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -87,17 +103,55 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export EDITOR=/usr/local/bin/nvim
 export VISUAL=/usr/local/bin/nvim
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PATH:$PYENV_ROOT/bin"
-eval "$(pyenv init -)"
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)		# Include hidden files.
+
+# vi mode
+bindkey -v
+export KEYTIMEOUT=10
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey '^r' history-incremental-search-backward
+
+# Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[4 q'
+  fi
+}
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    echo -ne "\e[4 q"
+}
+zle -N zle-line-init
+echo -ne '\e[4 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[4 q' ;} # Use beam shape cursor for each new prompt.
+
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
 
 # Defer initialization of nvm until nvm, node or a node-dependent command is
 # run. Ensure this block is only run once if .bashrc gets sourced multiple times
@@ -117,7 +171,25 @@ fi
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-#bindkey -v
-#bindkey "^?" backward-delete-char
 autoload -U promptinit; promptinit
 prompt pure
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

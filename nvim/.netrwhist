@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/Users/alec/.config/nvim/plugged'
+let g:netrw_dirhist_2='/Users/alec/.config/nvim'
+let g:netrw_dirhist_3='/Users/alec/.config'
+let g:netrw_dirhist_4='/Users/alec'
+let g:netrw_dirhist_5='/Users/alec/.config'
+let g:netrw_dirhist_6='/Users/alec/.config/nvim'
+let g:netrw_dirhist_7='/Users/alec/.config'
+let g:netrw_dirhist_8='/Users/alec/.config/nvim'
