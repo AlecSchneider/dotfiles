@@ -7,7 +7,8 @@ set relativenumber
 set nohlsearch
 set hidden
 set noerrorbells
-set tabstop=4 softtabstop=4
+set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set expandtab
 set smartindent
@@ -51,7 +52,7 @@ call plug#begin('~/.config/nvim/plugged/')
     Plug 'vim-utils/vim-man'
     Plug 'mbbill/undotree'
     Plug 'sheerun/vim-polyglot'
-    Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua' }
+    Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'airblade/vim-rooter'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         let g:fzf_action = {
@@ -70,6 +71,7 @@ call plug#begin('~/.config/nvim/plugged/')
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-lua/telescope.nvim'
+    Plug 'sbdchd/neoformat'
 
     " Universal
     Plug 'scrooloose/nerdtree'
@@ -81,7 +83,12 @@ call plug#begin('~/.config/nvim/plugged/')
         let g:airline_section_x = ''
     Plug 'freitass/todo.txt-vim'
     Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+    Plug 'prettier/vim-prettier', {
+      \ 'do': 'yarn install',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 call plug#end()
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
 
 colorscheme solarized8_dark
 if exists('+termguicolors')
@@ -347,9 +354,11 @@ endfun
 autocmd BufWritePre * :call TrimWhitespace()
 
 " Python
-au FileType python nmap <leader>r :vsp \| term python3 %<CR>i
+au FileType python nmap <leader>r :w \| :vsp \| term python3 %<CR>i
 au FileType python nmap <leader>b :1<CR>:sp \| term python3 %<CR>i
 au FileType sh nmap <leader>r :vsp \| term ./%<CR>i
+let g:neoformat_enabled_python = ['black', 'autopep8', 'yapf', 'docformatter']
+autocmd BufWritePre *.py Neoformat
 
 " Go
 let g:go_def_mapping_enabled = 0
@@ -366,4 +375,3 @@ autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports"
-
