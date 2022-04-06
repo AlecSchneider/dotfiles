@@ -9,5 +9,5 @@ ln -sfv "$DOTFILES_DIR/.skhdrc" ~
 ln -sfv "$DOTFILES_DIR/nvim" ~/.config
 ln -sfv "$DOTFILES_DIR/.tmux.conf" ~
 
-#. "$DOTFILES_DIR/brew.sh"
+. "$DOTFILES_DIR/brew.sh"
 #. "$DOTFILES_DIR/.macos"

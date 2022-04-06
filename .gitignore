@@ -1,1 +1,3 @@
-nvim/plugged
+nvim/plugged/
+package-lock.json
+node_modules/

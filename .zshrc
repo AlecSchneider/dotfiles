@@ -1,11 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export GOPATH=$HOME/gocode
-PATH="/opt/homebrew/bin/:/bin:/usr/local/sbin:$PATH:$GOPATH/bin:/usr/local/share/zsh/site-functions"
+PATH="/usr/local/Cellar/:/opt/homebrew/bin/:/bin:/usr/local/sbin:$PATH:$GOPATH/bin:/usr/local/share/zsh/site-functions"
 PATH="/Users/alec/.local/share/solana/install/active_release/bin:$PATH"
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+#export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export JAVA_HOME='/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home'
 export MYPATH="/usr/local/lib/python3.7/site-packages"
 export FZF_BASE="$HOME/.fzf"
 alias python='python3'

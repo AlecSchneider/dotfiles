@@ -1,5 +1,6 @@
 syntax on
 let mapleader = " "
+let maplocalleader = " "
 set autowrite
 
 set noshowmatch
@@ -64,7 +65,7 @@ call plug#begin('~/.config/nvim/plugged/')
     Plug 'stsewd/fzf-checkout.vim'
     " Neovim lsp Plugins
     Plug 'neovim/nvim-lspconfig'
-    Plug 'kabouzeid/nvim-lspinstall'
+    Plug 'williamboman/nvim-lsp-installer'
     Plug 'hrsh7th/nvim-compe'
     Plug 'tjdevries/lsp_extensions.nvim'
     " telescope requirements...
@@ -145,7 +146,6 @@ lua require('telescope').setup({defaults = {file_sorter = require('telescope.sor
 let g:vim_svelte_plugin_load_full_syntax = 1
 lua <<EOF
 require('gitsigns').setup()
-require'lspinstall'.setup()
 require'lspconfig'.svelte.setup {
     on_attach = function(client, bufnr)
         local ts_utils = require("nvim-lsp-ts-utils")
@@ -196,21 +196,23 @@ require'lspconfig'.svelte.setup {
         },
     },
 }
-local function setup_servers()
-  require'lspinstall'.setup()
-  local servers = require'lspinstall'.installed_servers()
-  for _, server in pairs(servers) do
-    require'lspconfig'[server].setup{}
-  end
-end
+local lsp_installer = require("nvim-lsp-installer")
 
-setup_servers()
+-- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
+-- or if the server is already installed).
+lsp_installer.on_server_ready(function(server)
+    local opts = {}
 
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function ()
-  setup_servers() -- reload installed servers
-  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-end
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
+
+    -- This setup() function will take the provided server configuration and decorate it with the necessary properties
+    -- before passing it onwards to lspconfig.
+    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+    server:setup(opts)
+end)
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
