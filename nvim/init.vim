@@ -28,8 +28,13 @@ set completeopt=menu,menuone,noselect
 set signcolumn=yes
 set autochdir
 
-" Give more space for displaying messages.
-set cmdheight=2
+" Nicer Layout
+highlight WinSeparator guibg=None
+set cmdheight=0
+set laststatus=3
+if &t_Co == 8 && $TERM !~# '^Eterm'
+  set t_Co=16
+endif
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -91,16 +96,13 @@ call plug#begin('~/.config/nvim/plugged/')
         let g:airline_section_x = ''
     Plug 'freitass/todo.txt-vim'
     Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'ishan9299/nvim-solarized-lua'
+    Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 call plug#end()
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
-
-
-set termguicolors
-colorscheme solarized8_dark
-set background=dark
-
 
 
 if executable('rg')
@@ -132,6 +134,12 @@ lua require('telescope').setup({defaults = {file_sorter = require('telescope.sor
 
 let g:vim_svelte_plugin_load_full_syntax = 1
 lua <<EOF
+
+vim.opt.bg = 'dark'
+vim.g.tokyonight_style = "night"
+vim.cmd[[colorscheme solarized]]
+vim.opt.termguicolors = true
+
 -- Enable spellchecking in markdown, text and gitcommit files
 require('trouble').setup{}
 require('gitsigns').setup()
@@ -174,10 +182,10 @@ vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true})
 
 local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -190,7 +198,7 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
     snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
         -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
         -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
         -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
@@ -274,10 +282,10 @@ local lspconfig = require("lspconfig")
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -293,16 +301,16 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<leader>F', vim.lsp.buf.formatting, bufopts)
 end
 
 local default_servers = { "tsserver", "vimls"}
@@ -314,7 +322,34 @@ local default_servers = { "tsserver", "vimls"}
     }
   end
 
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = "all",
 
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing (for "all")
+  ignore_install = { "phpdoc" },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+local ts_utils = require 'nvim-treesitter.ts_utils'
 EOF
 
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
@@ -332,7 +367,7 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap X "_d
 inoremap <C-c> <esc>
-nnoremap <leader><space> <c-^>
+nnoremap <leader><leader> <c-^>
 inoremap jk <esc>
 tnoremap jk <C-\><C-n>
 inoremap kj <esc>
