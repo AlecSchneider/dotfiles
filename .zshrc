@@ -68,8 +68,20 @@ ZSH_THEME=""
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(z zsh-syntax-highlighting zsh-autosuggestions zsh-completions history-substring-search fzf-zsh-plugin fzf-tab)
+plugins=(
+  git
+  z
+  macos
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  zsh-completions
+  history-substring-search
+  fzf-zsh-plugin
+  fzf-tab
+  fzf
+)
 
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
 
 bindkey '^K' history-substring-search-up
@@ -103,6 +115,11 @@ bindkey '^J' history-substring-search-down
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
 
 
 export LC_ALL=en_US.UTF-8

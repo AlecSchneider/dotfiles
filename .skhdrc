@@ -123,3 +123,9 @@ cmd - 3 : yabai -m space --focus 3
 cmd - 4 : yabai -m space --focus 4
 cmd - 5 : yabai -m space --focus 5
 cmd - 6 : yabai -m space --focus 6
+
+# Always vim movements
+shift + ctrl - h : skhd -k "left"
+shift + ctrl - j : skhd -k "down"
+shift + ctrl - k : skhd -k "up"
+shift + ctrl - l : skhd -k "right"
