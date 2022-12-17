@@ -124,8 +124,8 @@ _comp_options+=(globdots)
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export EDITOR=/usr/local/bin/nvim
-export VISUAL=/usr/local/bin/nvim
+export EDITOR=/opt/homebrew/bin//nvim
+export VISUAL=/opt/homebrew/bin//nvim
 
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
@@ -144,3 +144,10 @@ eval "$(starship init zsh)"
 export PNPM_HOME="/Users/alec/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+
+# bun completions
+[ -s "/Users/alec/.bun/_bun" ] && source "/Users/alec/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/alec/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
