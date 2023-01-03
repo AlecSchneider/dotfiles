@@ -8,6 +8,8 @@ ln -sfv "$DOTFILES_DIR/.yabairc" ~
 ln -sfv "$DOTFILES_DIR/.skhdrc" ~
 ln -sfv "$DOTFILES_DIR/nvim" ~/.config
 ln -sfv "$DOTFILES_DIR/.tmux.conf" ~
+ln -sfv "$DOTFILES_DIR/sketchybar" ~/.config
+ln -sfv "$DOTFILES_DIR/alacritty" ~/.config
 
 #. "$DOTFILES_DIR/brew.sh"
 #. "$DOTFILES_DIR/.macos"
