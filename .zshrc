@@ -9,17 +9,9 @@ export MYPATH="/usr/local/lib/python3.7/site-packages"
 export FZF_BASE="$HOME/.fzf"
 alias python='python3'
 alias pip='pip3'
-alias npm='pnpm'
 alias vim='nvim'
-alias gm='git checkout master && git pull'
 alias zshrc='vim ~/.zshrc'
 alias init.vim='vim ~/.dotfiles/nvim/init.vim'
-alias gbc='git checkout -b'
-alias gb='git checkout'
-alias ga='git add *'
-alias gc='git add-u && commit'
-alias gg='git push'
-alias gh='git pull'
 alias matrix='cmatrix -b'
 alias ..="cd .."
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -151,3 +143,8 @@ export PATH="$PNPM_HOME:$PATH"
 # Bun
 export BUN_INSTALL="/Users/alec/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
